@@ -6,6 +6,6 @@ import diaryData from './diaries.json'; // para soportar este tipo de archivos s
 
 const diaries: Array<DiaryEntry> = diaryData as Array<DiaryEntry>
 
-export const getEntries = () => diaries; // para recuperar las entries
+export const getEntries = (): DiaryEntry[] => diaries; // para recuperar las entries
 
-export const addEntry = () => null;   // para añadir una entrie
+export const addEntry = () => (): undefined => undefined //null;   // para añadir una entrie
