@@ -1,11 +1,29 @@
-import { DiaryEntry } from '../types';
-import diaryData from './diaries.json'; // para soportar este tipo de archivos se pone a true
-// resolveJsonModule en tsconfig.json y elimina el error
-// si no especifica el archivo diaries como .ts ó .json, el sistema busca...
-//... ".tsx", ".ts", ".node", ".js", ".json"
+import { DiaryEntry, NonSensitiveInfoDiaryEntry } from '../types'
+import diaryData from './diaries.json'
 
-const diaries: Array<DiaryEntry> = diaryData as Array<DiaryEntry>
+const diaries: DiaryEntry[] = diaryData as DiaryEntry[]
 
-export const getEntries = (): DiaryEntry[] => diaries; // para recuperar las entries
+export const getEntries = (): DiaryEntry[] => diaries
 
-export const addEntry = () => (): undefined => undefined //null;   // para añadir una entrie
+export const findById = (id: number): NonSensitiveInfoDiaryEntry | undefined => {
+  const entry = diaries.find(d => d.id === id)
+  if (entry != null) {
+    const { comment, ...restOfDiary } = entry
+    return restOfDiary
+  }
+
+  return undefined
+}
+
+export const getEntriesWithoutSensitiveInfo = (): NonSensitiveInfoDiaryEntry[] => {
+  return diaries.map(({ id, date, weather, visibility }) => {
+    return {
+      id,
+      date,
+      weather,
+      visibility
+    }
+  })
+}
+
+export const addEntry = (): undefined => undefined 
